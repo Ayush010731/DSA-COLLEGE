@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int numberOfSubarrays(vector<int>& arr, int k) {
+        int n=arr.size();
+        int i=0,j=0;
+        int Zero_Count=0;
+        int max_len=0;
+        int len=0;
+        int curr_sum=0;
+        for(int i=0; i<n; i++){
+            if(arr[i]%2==0){
+                arr[i]=0;
+            }
+            else{
+                arr[i]=1;
+            }
+        }
+         unordered_map<int,int>mp;
+     for(int i=1; i<n; i++){
+         arr[i]=arr[i-1]+arr[i];
+     }
+     int count=0;
+     for(int j=0; j<n; j++){
+         if(arr[j]==k){
+             count++;
+             
+         }
+         int val=arr[j]-k;
+         if(mp.find(val)!=mp.end()){
+             count=count+mp[val];
+         }
+         if(mp.find(arr[j])==mp.end()){
+             mp[arr[j]]=0;
+         }
+         mp[arr[j]]++;
+     }
+        return count;
+        
+        
+        
+    }
+};
